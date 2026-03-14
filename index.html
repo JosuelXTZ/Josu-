@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Bíblico do Josuel</title>
+
+<style>
+body{
+font-family: Arial;
+background:#eef2f7;
+text-align:center;
+padding:20px;
+}
+
+#quiz{
+background:white;
+padding:20px;
+border-radius:10px;
+max-width:500px;
+margin:auto;
+}
+
+button{
+display:block;
+width:100%;
+padding:12px;
+margin:8px 0;
+font-size:16px;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📖 Quiz Bíblico</h1>
+
+<div id="quiz">
+
+<h2 id="pergunta"></h2>
+
+<div id="respostas"></div>
+
+</div>
+
+<script>
+
+let perguntas = [
+{
+pergunta:"Capital do Brasil?",
+respostas:["Brasília","Rio","São Paulo"],
+correta:0
+},
+{
+pergunta:"Quem construiu a arca?",
+respostas:["Noé","Abraão","Moisés"],
+correta:0
+},
+{
+pergunta:"Quem matou Golias?",
+respostas:["Davi","Pedro","Paulo"],
+correta:0
+},
+{
+pergunta:"Quem abriu o mar vermelho?",
+respostas:["Moisés","Elias","Isaías"],
+correta:0
+}
+];
+
+let atual = 0;
+
+function carregarPergunta(){
+
+let p = perguntas[atual];
+
+document.getElementById("pergunta").innerText = p.pergunta;
+
+let html = "";
+
+for(let i=0;i<p.respostas.length;i++){
+
+html += `<button onclick="responder(${i})">${p.respostas[i]}</button>`;
+
+}
+
+document.getElementById("respostas").innerHTML = html;
+
+}
+
+function responder(i){
+
+if(i == perguntas[atual].correta){
+
+atual++;
+
+if(atual >= perguntas.length){
+
+document.getElementById("quiz").innerHTML = "<h2>🎉 Você terminou o quiz!</h2>";
+
+}else{
+
+carregarPergunta();
+
+}
+
+}else{
+
+alert("Resposta errada, tente novamente.");
+
+}
+
+}
+
+carregarPergunta();
+
+</script>
+
+</body>
+</html>
