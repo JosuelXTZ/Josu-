@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Futebol Ao Vivo - Josuel</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0b3d91;
+margin:0;
+color:white;
+}
+
+header{
+background:white;
+color:#0b3d91;
+padding:15px;
+text-align:center;
+font-size:24px;
+font-weight:bold;
+}
+
+#jogos{
+padding:15px;
+}
+
+.jogo{
+background:white;
+color:black;
+padding:15px;
+margin-bottom:15px;
+border-radius:10px;
+box-shadow:0 5px 10px rgba(0,0,0,0.3);
+}
+
+.times{
+display:flex;
+justify-content:space-between;
+font-size:18px;
+font-weight:bold;
+}
+
+.placar{
+text-align:center;
+font-size:22px;
+margin:10px;
+}
+
+.status{
+text-align:center;
+font-weight:bold;
+color:green;
+}
+
+footer{
+background:#072a63;
+text-align:center;
+padding:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+⚽ Futebol Ao Vivo
+</header>
+
+<div id="jogos">
+Carregando jogos...
+</div>
+
+<footer>
+Criado por Josuel
+</footer>
+
+<script>
+
+async function carregarJogos(){
+
+let url="https://site.api.espn.com/apis/v2/sports/soccer/scoreboard";
+
+let resposta=await fetch(url);
+let dados=await resposta.json();
+
+let jogos=dados.events;
+
+let container=document.getElementById("jogos");
+container.innerHTML="";
+
+jogos.forEach(jogo=>{
+
+let casa=jogo.competitions[0].competitors[0];
+let fora=jogo.competitions[0].competitors[1];
+
+let timeCasa=casa.team.displayName;
+let timeFora=fora.team.displayName;
+
+let placarCasa=casa.score;
+let placarFora=fora.score;
+
+let status=jogo.status.type.description;
+
+container.innerHTML+=`
+
+<div class="jogo">
+
+<div class="times">
+<span>${timeCasa}</span>
+<span>${timeFora}</span>
+</div>
+
+<div class="placar">
+${placarCasa} ⚽ ${placarFora}
+</div>
+
+<div class="status">
+${status}
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+carregarJogos();
+
+setInterval(carregarJogos,60000);
+
+</script>
+
+</body>
+</html>
